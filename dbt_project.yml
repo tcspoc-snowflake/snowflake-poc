@@ -36,3 +36,20 @@ models:
     # Applies to all files under models/example/
     example:
       materialized: view
+
+
+on-run-start:
+    - '{{udfs("CREATE_FUNCTION")}}'
+    - '{{ dbt_external_tables.stage_external_sources("ext_full_refresh: true") }}'
+    - '{{udfs("REFRESH_EXTERNAL_TABLE")}}'
+
+on-run-end:
+    - '{{udfs("REFRESH_EXTERNAL_TABLE")}}'
+
+
+vars:
+  external_stage: "('@blobsnowflakepoc/Sample_Superstore.xls')"
+  external_table: "EXT_TABLES.EXT_CUSTOMER"
+  snowflake_user_file: snowflake/users/users.yml
+  snowflake_network_policy_file: snowflake/policy/network_policies.yml
+  snowflake_admin: tcspocadmin
