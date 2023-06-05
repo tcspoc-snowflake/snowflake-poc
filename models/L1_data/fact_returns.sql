@@ -6,10 +6,10 @@ with retunrs as (
 ),
 final as (
     select
-     returns.RETURNED as returned,
-     returns.ORDERID as order_id
+     retunrs.RETURNED as returned,
+     retunrs.ORDERID as order_id
     from 
-    returns
+    retunrs
 )
 
 select * from final
